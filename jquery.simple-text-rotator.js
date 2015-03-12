@@ -8,7 +8,8 @@
  * allows you to rotate multiple text without changing 
  * the layout
  * https://github.com/peachananr/simple-text-rotator
- *
+ * 
+ * Modified by Paul Strong (lapluviosilla): https://github.com/lapluviosilla/simple-text-rotator
  * ========================================================== */
 
 !function($){
