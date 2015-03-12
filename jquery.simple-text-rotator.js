@@ -14,15 +14,16 @@
 !function($){
   
   var defaults = {
-		animation: "dissolve",
-		separator: ",",
-		speed: 2000
-	};
-	
-	$.fx.step.textShadowBlur = function(fx) {
+    animation: "dissolve",
+    separator: ",",
+    speed: 2000,
+    cycleMode: 'rotate'
+  };
+
+  $.fx.step.textShadowBlur = function(fx) {
     $(fx.elem).prop('textShadowBlur', fx.now).css({textShadow: '0 0 ' + Math.floor(fx.now) + 'px black'});
   };
-	
+
   $.fn.textrotator = function(options){
     var settings = $.extend({}, defaults, options);
     
@@ -33,9 +34,15 @@
         array.push(value); 
       });
       el.text(array[0]);
+      var intervalId = null;
       
       // animation option
       var rotate = function() {
+        // Clear interval if cycleMode is set to once and we have reached the end of the text array
+        if (settings.cycleMode == 'once' && ($.inArray(el.text(), array)+1 == array.length)) {
+          clearInterval(intervalId);
+          return;
+        }
         switch (settings.animation) { 
           case 'dissolve':
             el.animate({
@@ -159,7 +166,7 @@
           break;
         }
       };
-      setInterval(rotate, settings.speed);
+      intervalId = setInterval(rotate, settings.speed);
     });
   }
   
